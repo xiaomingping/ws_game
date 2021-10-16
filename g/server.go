@@ -8,6 +8,10 @@ import (
 	_ "github.com/xiaomingping/ws_game/proc/ws"
 )
 
+var (
+	Serve *serve
+)
+
 type opt func(s Session, Message interface{})
 
 type serve struct {
@@ -28,6 +32,7 @@ func NewServe(address string) *serve {
 	s.queue.EnableCapturePanic(true)
 	s.genericPeer = peer.NewGenericPeer("ws.Acceptor", "server", s.address, s.queue)
 	s.Dispatcher = proc.NewMessageDispatcherBindPeer(s.genericPeer, "ws.ltv")
+	Serve = s
 	return s
 }
 
